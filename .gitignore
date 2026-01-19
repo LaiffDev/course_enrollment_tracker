@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Angular
+.angular/
+frontend/dist/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
