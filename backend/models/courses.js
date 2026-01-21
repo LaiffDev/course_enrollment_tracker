@@ -1,33 +1,27 @@
 import { sequelize, DataTypes } from "../database/dbConnection.js";
 
-const User = sequelize.define(
-  "User",
+const Course = sequelize.define(
+  "Course",
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    fullname: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    password: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    role: {
-      type: DataTypes.ENUM("Studente", "Docente"),
+    instructor_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    published: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
   },
@@ -37,4 +31,4 @@ const User = sequelize.define(
   },
 );
 
-export default User;
+export default Course;

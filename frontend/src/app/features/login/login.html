@@ -1,42 +1,52 @@
-<div class="bg-[#2563EB] h-screen flex items-center justify-center">
-  <div class="bg-white/50 w-[25%] rounded-md">
+<div class="h-screen flex flex-col items-center justify-center">
+  <div class="my-8">
+    <h2 class="text-4xl font-medium text-black">Accedi per continuare a imparare</h2>
+  </div>
+  <div class="bg-slate-300/50 w-[25%] rounded-md p-3 shadow-md">
     <div class="example-container p-3">
-      <!-- email input -->
-      <div class="m-auto p-3">
-        <mat-form-field class="w-full">
-          <mat-label>Inserisci email</mat-label>
-          <input
-            matInput
-            placeholder="pat@example.com"
-            [formControl]="email"
-            required
-            class="w-full!"
-          />
-        </mat-form-field>
-      </div>
+      <form (submit)="loginUser()">
+        <!-- email input -->
+        <div class="m-auto p-3">
+          <mat-form-field class="w-full">
+            <mat-label>Inserisci email</mat-label>
+            <input matInput [formControl]="email" required class="w-full!" />
+          </mat-form-field>
+        </div>
 
-      <!-- password input -->
-      <div class="m-auto p-3">
-        <mat-form-field class="w-full">
-          <mat-label>Inserisci password</mat-label>
-          <input matInput [type]="hide() ? 'password' : 'text'" />
+        <!-- password input -->
+        <div class="m-auto p-3">
+          <mat-form-field class="w-full">
+            <mat-label>Inserisci password</mat-label>
+            <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="password" />
+            <button
+              matIconButton
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+              type="button"
+            >
+              <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-wrap gap-4 justify-center m-3">
           <button
-            matIconButton
-            matSuffix
-            (click)="clickEvent($event)"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide()"
+            class="w-full bg-white p-3 rounded-md cursor-pointer hover:bg-[#6d28d2] hover:text-white transition-all ease-in shadow-md"
           >
-            <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            Accedi
           </button>
-        </mat-form-field>
-      </div>
-
-      <div class="flex flex-wrap gap-4 justify-center m-3">
-        <button class="w-full bg-red-400 p-3 rounded-md">Accedi</button>
-        <p>oppure</p>
-        <button class="w-full bg-red-400 p-3 rounded-md">Registrati</button>
-      </div>
+          <p class="text-slate-500">oppure</p>
+          <button
+            class="w-full bg-[#6d28d2] text-white p-3 rounded-md cursor-pointer hover:bg-[#892de1] hover:text-white transition-all ease-in shadow-md"
+            type="button"
+            routerLink="/register"
+          >
+            Registrati
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

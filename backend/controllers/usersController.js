@@ -2,10 +2,8 @@ import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import { where } from "sequelize";
 
 dotenv.config();
-const jwtSecret = process.env.JWT_SECRET;
 
 /*helper function to sanitize the data being sent to the browser
  *password and email are being "removed" from response for security purpose
@@ -65,9 +63,15 @@ export const RegisterUser = async (req, res) => {
 export const LoginUser = async (req, res) => {
   const { email, password } = req.body;
 
+  const secret = process.env.JWT_SECRET;
+
   try {
     //search for user with the same email from input
     const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      return res.status(400).json("User not found");
+    }
 
     //compare for password checks
     const passwordCheck = await bcrypt.compare(

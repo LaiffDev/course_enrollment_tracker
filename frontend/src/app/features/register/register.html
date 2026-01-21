@@ -1,0 +1,83 @@
+<div class="h-screen flex flex-col items-center justify-center">
+  <!-- back button -->
+  <div
+    class="absolute left-0 top-0 p-3 rounded-md bg-[#6d28d2] text-white m-8 cursor-pointer shadow-md flex items-center gap-2 hover:hover:bg-[#892de1] transition ease-in"
+    routerLink="/"
+  >
+    <span class="material-symbols-rounded"> arrow_back </span>
+    <p>indietro</p>
+  </div>
+
+  <div class="my-8">
+    <h2 class="text-4xl font-medium text-[#2e2e2e]">Registrati per accedere ai tuoi corsi</h2>
+  </div>
+
+  <!-- form -->
+  <div class="bg-slate-300/50 w-[25%] rounded-md p-3 shadow-md">
+    <div class="example-container p-3">
+      <form (submit)="registerUser()">
+        <!-- fullname input -->
+        <div class="m-auto p-3">
+          <mat-form-field class="w-full">
+            <mat-label>Nome e Cognome</mat-label>
+            <input matInput [formControl]="fullname" required class="w-full!" />
+          </mat-form-field>
+        </div>
+
+        <!-- username input -->
+        <div class="m-auto p-3">
+          <mat-form-field class="w-full">
+            <mat-label>Username</mat-label>
+            <input matInput [formControl]="username" required class="w-full!" />
+          </mat-form-field>
+        </div>
+
+        <!-- email input -->
+        <div class="m-auto p-3">
+          <mat-form-field class="w-full">
+            <mat-label>Email</mat-label>
+            <input matInput [formControl]="email" required class="w-full!" />
+          </mat-form-field>
+        </div>
+
+        <!-- password input -->
+        <div class="m-auto p-3">
+          <mat-form-field class="w-full">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="password" />
+            <button
+              matIconButton
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+              type="button"
+            >
+              <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <!-- options for selecting student or teacher -->
+        <div class="m-3 mb-5">
+          <mat-form-field class="w-full">
+            <mat-label>Ruolo</mat-label>
+            <mat-select [formControl]="role">
+              @for (option of options; track option) {
+                <mat-option class="bg-gray-300!" [value]="option">{{ option }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="flex flex-wrap gap-4 justify-center m-3">
+          <button
+            class="w-full bg-white p-3 rounded-md cursor-pointer hover:bg-[#892de1] hover:text-white transition-all ease-in shadow-md"
+          >
+            Registrati
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

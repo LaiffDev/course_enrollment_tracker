@@ -1,15 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
-import { UserModel } from '../../shared/models/user-model';
+
+import { MatSelectModule } from '@angular/material/select';
 import { AuthenticationService } from '../../shared/services/authenticationService';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -17,14 +17,18 @@ import { AuthenticationService } from '../../shared/services/authenticationServi
     ReactiveFormsModule,
     MatIconModule,
     RouterLink,
+    MatSelectModule,
   ],
-  templateUrl: './login.html',
-  styleUrl: './login.css',
+  templateUrl: './register.html',
+  styleUrl: './register.css',
 })
-export class Login {
+export class Register {
   //form controls
+  readonly fullname = new FormControl('', [Validators.required]);
+  readonly username = new FormControl('', [Validators.required]);
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
+  readonly role = new FormControl('', [Validators.required]);
 
   //dependecies
   private authenticationService = inject(AuthenticationService);
@@ -34,32 +38,43 @@ export class Login {
   hide = signal(true);
 
   //variables
-  user: any;
+  options: string[] = ['Studente', 'Docente'];
 
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
-  loginUser() {
+  registerUser() {
+    const fullname = this.fullname.value;
+    const username = this.username.value;
     const email = this.email.value;
     const password = this.password.value;
+    const role = this.role.value;
 
-    if (!email || !password) {
-      alert('Credenziali non valide. Verifica email e password e riprova.');
+    if (!fullname || !username || !email || !password || !role) {
+      alert('Compila tutti i campi!');
       return;
     }
 
-    this.authenticationService.LoginUser(email, password).subscribe({
+    const payload = {
+      fullname,
+      username,
+      email,
+      password,
+      role,
+    };
+
+    this.authenticationService.RegisterUser(payload).subscribe({
       next: (res) => {
         if (res) {
-          this.user = res;
-          localStorage.setItem('user', JSON.stringify(this.user));
-          this.router.navigate(['/homepage']);
+          alert('Registrazione avvenuta con successo.');
+          this.router.navigate(['']);
         }
       },
       error: (err) => {
-        console.error('Errore autenticazione : ', err);
+        console.error('Errore : ', err);
+        alert('Errore durante la registrazione');
       },
     });
   }

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import { connectDatabase } from "./database/dbConnection.js";
 import userRouter from "./routes/userRoute.js";
+import courseRouter from "./routes/courseRoute.js";
 
 const app = express();
 const PORT = process.env.port || 3000;
@@ -14,6 +15,7 @@ connectDatabase();
 
 //routes
 app.use("/users", userRouter);
+app.use("/courses", courseRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
