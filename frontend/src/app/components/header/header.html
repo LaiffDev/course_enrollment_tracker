@@ -1,0 +1,28 @@
+<section class="bg-[#c2e9eb] p-5 flex items-center justify-between shadow-md gap-5">
+  <div class="text-3xl font-medium"></div>
+
+  <div>
+    <button matButton [matMenuTriggerFor]="menu" class="bg-white! shadow-md py-6! rounded-md!">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-rounded text-4xl!"> account_circle </span>
+        <p>{{ username }}</p>
+      </div>
+    </button>
+    <mat-menu #menu="matMenu" class="bg-white! w-40 rounded-md!">
+      <button
+        mat-menu-item
+        class="hover:bg-[#6d28d2]! hover:text-white! text-center! transition ease-in"
+      >
+        Personale
+      </button>
+      <button
+        mat-menu-item
+        class="hover:bg-[#6d28d2]! hover:text-white! text-center! transition ease-in"
+        type="button"
+        (click)="logoutUser()"
+      >
+        Logout
+      </button>
+    </mat-menu>
+  </div>
+</section>

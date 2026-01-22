@@ -4,10 +4,11 @@ import {
   LoginUser,
   RegisterUser,
 } from "../controllers/usersController.js";
+import { AuthenticateToken } from "../tokenAuth/generateToken.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/", GetAllUsers);
+userRouter.get("/", AuthenticateToken, GetAllUsers);
 userRouter.post("/register", RegisterUser);
 userRouter.post("/login", LoginUser);
 

@@ -18,7 +18,7 @@ const connectDatabase = async () => {
 
     //synchronizing tables
     await sequelize
-      .sync()
+      .sync({ alter: true })
       .then(() => console.log("Tables synchronized"))
       .catch((err) => console.error(`Error synchronizing : ${err}`));
   } catch (error) {

@@ -16,10 +16,10 @@ const sanitize = (user) => {
 //API's
 //get all users
 export const GetAllUsers = async (req, res) => {
-  const users = await User.findAll({ raw: true });
+  const users = await User.findAll({ rwa: true });
+
   res.status(200).json(users);
 };
-
 //register a new user
 export const RegisterUser = async (req, res) => {
   const { fullname, username, email, password, role } = req.body;
@@ -55,7 +55,8 @@ export const RegisterUser = async (req, res) => {
       user: sanitize(newUser),
     });
   } catch (error) {
-    return res.status(400).json("Internal server error");
+    console.error("Error : ", error);
+    return res.status(500).json(`Internal server error : ${error}`);
   }
 };
 

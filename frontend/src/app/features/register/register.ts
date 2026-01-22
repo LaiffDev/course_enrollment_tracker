@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 
 import { MatSelectModule } from '@angular/material/select';
-import { AuthenticationService } from '../../shared/services/authenticationService';
+import { AuthenticationService } from '../../shared/services/authentication-service';
 
 @Component({
   selector: 'app-register',

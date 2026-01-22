@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { Router, RouterLink } from '@angular/router';
 import { UserModel } from '../../shared/models/user-model';
-import { AuthenticationService } from '../../shared/services/authenticationService';
+import { AuthenticationService } from '../../shared/services/authentication-service';
 
 @Component({
   selector: 'app-login',
@@ -26,15 +26,10 @@ export class Login {
   readonly email = new FormControl('', [Validators.required, Validators.email]);
   readonly password = new FormControl('', [Validators.required]);
 
-  //dependecies
   private authenticationService = inject(AuthenticationService);
   private router = inject(Router);
 
-  //signals
   hide = signal(true);
-
-  //variables
-  user: any;
 
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
@@ -51,15 +46,10 @@ export class Login {
     }
 
     this.authenticationService.LoginUser(email, password).subscribe({
-      next: (res) => {
-        if (res) {
-          this.user = res;
-          localStorage.setItem('user', JSON.stringify(this.user));
-          this.router.navigate(['/homepage']);
-        }
-      },
+      next: () => this.router.navigate(['/homepage']),
       error: (err) => {
-        console.error('Errore autenticazione : ', err);
+        console.error('Login error:', err);
+        alert('Credenziali non valide. Verifica email e password e riprova.');
       },
     });
   }
