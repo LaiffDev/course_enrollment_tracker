@@ -1,28 +1,30 @@
-<section class="bg-[#c2e9eb] p-5 flex items-center justify-between shadow-md gap-5">
-  <div class="text-3xl font-medium"></div>
+<section class="bg-[#e2e2e2] p-5 flex items-center justify-between shadow-md gap-5">
+  <div class="font-medium">
+    @if (user.role === 'Studente') {
+      <ul class="flex items-center gap-8">
+        <li>
+          <a routerLink="/homepage" class="hover:text-[#6d28d2]">Home</a>
+        </li>
 
-  <div>
-    <button matButton [matMenuTriggerFor]="menu" class="bg-white! shadow-md py-6! rounded-md!">
-      <div class="flex items-center gap-2">
-        <span class="material-symbols-rounded text-4xl!"> account_circle </span>
-        <p>{{ username }}</p>
-      </div>
+        <li>
+          <a routerLink="/personal" class="hover:text-[#6d28d2]">Area personale</a>
+        </li>
+      </ul>
+    }
+  </div>
+
+  <div class="flex justify-end items-center gap-3">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-rounded text-4xl!"> account_circle </span>
+      <p>{{ fullname }}</p>
+    </div>
+
+    <button
+      class="bg-[#6d28d2] hover:bg-[#5621a5] text-white transition ease-in w-30 rounded-full shadow-md p-3 cursor-pointer"
+      type="button"
+      (click)="logoutUser()"
+    >
+      Logout
     </button>
-    <mat-menu #menu="matMenu" class="bg-white! w-40 rounded-md!">
-      <button
-        mat-menu-item
-        class="hover:bg-[#6d28d2]! hover:text-white! text-center! transition ease-in"
-      >
-        Personale
-      </button>
-      <button
-        mat-menu-item
-        class="hover:bg-[#6d28d2]! hover:text-white! text-center! transition ease-in"
-        type="button"
-        (click)="logoutUser()"
-      >
-        Logout
-      </button>
-    </mat-menu>
   </div>
 </section>

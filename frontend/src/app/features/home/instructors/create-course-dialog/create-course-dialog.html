@@ -1,0 +1,65 @@
+<div class="p-3">
+  <div class="m-auto p-3">
+    <h2 mat-dialog-title class="text-2xl my-5 font-medium">Aggiungi un nuovo corso</h2>
+    <div>
+      <form [formGroup]="courseDataForm" (submit)="saveCourse()">
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Titolo del Corso</mat-label>
+            <input matInput formControlName="title" required class="w-full!" />
+          </mat-form-field>
+        </div>
+
+        <div class="">
+          <mat-form-field class="w-full">
+            <mat-label>Disponibilità</mat-label>
+            <mat-select formControlName="status">
+              @for (option of options; track option) {
+                <mat-option class="bg-gray-300!" [value]="option">{{ option }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="flex justify-between items-center gap-4">
+          <mat-form-field class="w-full">
+            <mat-label>Data pubblicazione</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="published" />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width w-full">
+            <mat-label>Monte Ore</mat-label>
+            <input matInput formControlName="establishedTime" />
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="w-full">
+            <mat-label>Descrione del Corso</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+
+        @if (courseDataForm.invalid) {
+          <div>
+            <button
+              class="bg-[#b4b4b4] text-center font-medium text-white cursor-not-allowed shadow-md p-4 rounded-md w-full"
+            >
+              salva corso
+            </button>
+          </div>
+        } @else {
+          <div>
+            <button
+              class="bg-[#892de1] text-center font-medium text-white cursor-pointer shadow-md p-4 rounded-md w-full"
+            >
+              salva corso
+            </button>
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+</div>

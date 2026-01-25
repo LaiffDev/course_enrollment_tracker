@@ -8,8 +8,4 @@ import { UserModel } from '../models/user-model';
 })
 export class UserService {
   private http = inject(HttpClient);
-
-  GetAllUsers() {
-    return this.http.get<UserModel[]>(`${environment.apiUrl}/users/`);
-  }
 }

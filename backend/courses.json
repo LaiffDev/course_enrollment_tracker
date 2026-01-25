@@ -1,0 +1,69 @@
+[
+  {
+    "titolo": "Introduzione alla Programmazione Web",
+    "descrizione": "Concetti base dello sviluppo web, struttura delle pagine e primi esempi pratici.",
+    "docente": "Marco Rossi",
+    "stato_corso": "Disponibile",
+    "data_pubblicazione": "2023-09-15",
+    "monte_ore": 40
+  },
+  {
+    "titolo": "HTML e CSS per Principianti",
+    "descrizione": "Creazione di layout moderni, gestione degli stili e struttura dei contenuti.",
+    "docente": "Marco Rossi",
+    "stato_corso": "Disponibile",
+    "data_pubblicazione": "2023-10-20",
+    "monte_ore": 32
+  },
+
+  {
+    "titolo": "Fondamenti di Data Analysis",
+    "descrizione": "Analisi dei dati, interpretazione dei risultati e utilizzo di strumenti base.",
+    "docente": "Laura Bianchi",
+    "stato_corso": "Disponibile",
+    "data_pubblicazione": "2023-11-05",
+    "monte_ore": 45
+  },
+  {
+    "titolo": "Statistica Applicata ai Dati",
+    "descrizione": "Concetti statistici essenziali per comprendere e analizzare dataset reali.",
+    "docente": "Laura Bianchi",
+    "stato_corso": "Non Disponibile",
+    "data_pubblicazione": "2023-08-12",
+    "monte_ore": 38
+  },
+
+  {
+    "titolo": "UX/UI Design per Applicazioni Digitali",
+    "descrizione": "Progettazione dell’esperienza utente e delle interfacce digitali moderne.",
+    "docente": "Giulia Ferri",
+    "stato_corso": "Disponibile",
+    "data_pubblicazione": "2023-09-28",
+    "monte_ore": 30
+  },
+  {
+    "titolo": "Prototipazione e Usabilità",
+    "descrizione": "Creazione di prototipi interattivi e valutazione dell’usabilità.",
+    "docente": "Giulia Ferri",
+    "stato_corso": "Disponibile",
+    "data_pubblicazione": "2024-01-10",
+    "monte_ore": 26
+  },
+
+  {
+    "titolo": "Programmazione Java Avanzata",
+    "descrizione": "Approfondimento su OOP, gestione delle eccezioni e strutture complesse.",
+    "docente": "Alessandro Conti",
+    "stato_corso": "Disponibile",
+    "data_pubblicazione": "2024-02-05",
+    "monte_ore": 60
+  },
+  {
+    "titolo": "Java e Design Pattern",
+    "descrizione": "Applicazione dei principali design pattern nello sviluppo software.",
+    "docente": "Alessandro Conti",
+    "stato_corso": "Non Disponibile",
+    "data_pubblicazione": "2023-11-18",
+    "monte_ore": 42
+  }
+]

@@ -14,17 +14,19 @@ export class AuthenticationService {
   user: AuthModel | null = null;
 
   RegisterUser(user: UserModel) {
-    return this.http.post(`${environment.apiUrl}/users/register`, user);
+    return this.http.post(`${environment.apiUrl}/api/users/register`, user);
   }
 
   LoginUser(email: string, password: string) {
-    return this.http.post<AuthModel>(`${environment.apiUrl}/users/login`, { email, password }).pipe(
-      tap((res) => {
-        this.user = res;
+    return this.http
+      .post<AuthModel>(`${environment.apiUrl}/api/users/login`, { email, password })
+      .pipe(
+        tap((res) => {
+          this.user = res;
 
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.logged));
-      }),
-    );
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('user', JSON.stringify(res.logged));
+        }),
+      );
   }
 }

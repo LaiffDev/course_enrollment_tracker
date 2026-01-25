@@ -6,4 +6,8 @@ export interface CourseModel {
   status: string;
   establishedTime: string;
   published: string;
+  instructor_name: string;
+  enrollment: {
+    studied_hours: number;
+  };
 }

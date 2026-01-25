@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { connectDatabase } from "./database/dbConnection.js";
+
 import userRouter from "./routes/userRoute.js";
 import courseRouter from "./routes/courseRoute.js";
 
@@ -14,8 +15,8 @@ app.use(express.json());
 connectDatabase();
 
 //routes
-app.use("/users", userRouter);
-app.use("/courses", courseRouter);
+app.use("/api/users", userRouter);
+app.use("/api/courses", courseRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

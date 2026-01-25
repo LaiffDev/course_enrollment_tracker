@@ -1,12 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
-import { UserModel } from '../../shared/models/user-model';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule, MatMenuModule],
+  imports: [MatButtonModule, MatMenuModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -16,12 +15,12 @@ export class Header {
 
   //signals
   user: any;
-  username: string | null = null;
+  fullname: string | null = null;
 
   ngOnInit() {
     if (typeof localStorage !== undefined) {
       this.user = JSON.parse(localStorage.getItem('user') || 'null');
-      this.username = this.user.username;
+      this.fullname = this.user.fullname;
     }
   }
 

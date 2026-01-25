@@ -1,0 +1,96 @@
+<div>
+  <mat-form-field class="my-8">
+    <mat-label>Cerca corso...</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input class="w-full!" />
+  </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8 shadow-md my-4 rouded-lg">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- id -->
+    <!-- <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+    </ng-container> -->
+
+    <!-- title -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>CORSO</th>
+      <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+    </ng-container>
+
+    <!-- description -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>DESCRIZIONE</th>
+      <td mat-cell *matCellDef="let row">{{ row.description.slice(0, 50) + '...' }}</td>
+    </ng-container>
+
+    <!-- instructor name -->
+    <ng-container matColumnDef="instructor_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ISTRUTTORE</th>
+      <td mat-cell *matCellDef="let row">{{ row.instructor_name }}</td>
+    </ng-container>
+
+    <!-- status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>STATO</th>
+      <td mat-cell *matCellDef="let row">
+        @if (row.status === 'Disponibile') {
+          <span class="text-green-600 font-medium">{{ row.status }}</span>
+        } @else {
+          <span class="text-red-600 font-medium">{{ row.status }}</span>
+        }
+      </td>
+    </ng-container>
+
+    <!-- total course hours -->
+    <ng-container matColumnDef="establishedTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>MONTE ORE</th>
+      <td mat-cell *matCellDef="let row" class="text-center!">{{ row.establishedTime }}</td>
+    </ng-container>
+
+    <!-- published date -->
+    <ng-container matColumnDef="published">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>PUBBLICATO</th>
+      <td mat-cell *matCellDef="let row">{{ row.published | date: 'yyyy-MM-dd' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="cta">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row" class="flex items-center gap-4">
+        @if (enrolledCourseIds.has(row.id)) {
+          <button class="bg-[#e2e2e2] p-2 rounded-md text-white w-40 cursor-not-allowed">
+            iscritto
+          </button>
+        } @else {
+          <button
+            class="bg-[#2e2e2e] p-2 rounded-md text-white w-40 cursor-pointer"
+            (click)="enrollToCourse(row)"
+          >
+            iscriviti gratuitamente
+          </button>
+        }
+        <a
+          class="border border-[#6d28d2] text-[#6d28d2] text-center p-2 cursor-pointer rounded-md w-40"
+          (click)="viewCourseDetails(row.id)"
+        >
+          dettagli corso
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">Nessun corso disponibile.</td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    class="bg-slate-200!"
+    [pageSizeOptions]="[6]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>

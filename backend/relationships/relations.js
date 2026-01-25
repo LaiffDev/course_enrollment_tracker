@@ -11,6 +11,7 @@ User.hasMany(Course, {
 Course.belongsTo(User, {
   foreignKey: "instructor_id",
   as: "Docente",
+  onDelete: "CASCADE",
 });
 
 //a student can enroll to many courses
@@ -18,6 +19,7 @@ User.belongsToMany(Course, {
   through: CourseEnrollment,
   foreignKey: "user_id",
   as: "Enrolled",
+  onDelete: "CASCADE",
 });
 
 //a course can have many students
@@ -25,4 +27,13 @@ Course.belongsToMany(User, {
   through: CourseEnrollment,
   foreignKey: "course_id",
   as: "Studente",
+});
+
+Course.hasOne(CourseEnrollment, {
+  foreignKey: "course_id",
+  as: "enrollment",
+});
+
+CourseEnrollment.belongsTo(Course, {
+  foreignKey: "course_id",
 });

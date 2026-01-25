@@ -1,4 +1,4 @@
-import { sequelize, DataTypes } from "../database/dbConnection";
+import { sequelize, DataTypes } from "../database/dbConnection.js";
 
 const CourseEnrollment = sequelize.define(
   "CourseEnrollment",
@@ -19,6 +19,10 @@ const CourseEnrollment = sequelize.define(
     enrolledAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
+    },
+    studied_hours: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
   },
   {

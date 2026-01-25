@@ -1,0 +1,18 @@
+table {
+  width: 100%;
+  color: #919090;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+th {
+  text-align: center;
+  background-color: #6d28d2 !important;
+  color: white !important;
+}
+
+td {
+  padding: 18px;
+}

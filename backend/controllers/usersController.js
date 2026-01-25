@@ -2,6 +2,7 @@ import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import Course from "../models/courses.js";
 
 dotenv.config();
 
@@ -16,9 +17,23 @@ const sanitize = (user) => {
 //API's
 //get all users
 export const GetAllUsers = async (req, res) => {
-  const users = await User.findAll({ rwa: true });
+  try {
+    const loggedUser = req.user;
+    const user = await User.findOne({ where: { email: loggedUser.email } });
 
-  res.status(200).json(users);
+    /**
+     * the visualization of every user is accessible only for instructors
+     */
+    if (user.dataValues.role !== "Docente") {
+      return res.status(401).json({ message: "Unauthorized user!" });
+    }
+
+    const allUsers = await User.findAll({ raw: true });
+    res.status(200).json(sanitize(allUsers));
+  } catch (error) {
+    console.error("Error : ", error);
+    return res.status(500).json(`Internal server error : ${error}`);
+  }
 };
 //register a new user
 export const RegisterUser = async (req, res) => {
@@ -29,10 +44,15 @@ export const RegisterUser = async (req, res) => {
       return res.status(400).json("All fields are required!");
     }
 
-    //check if a user with that email and username ìììalready exist
+    //check if a user with that email or username already exists
     const existingUser = await User.findOne({ where: { email, username } });
     if (existingUser) {
-      return res.status(409).json("User already exists");
+      return res.status(409).json("User already exists!");
+
+      /**
+       * in frontend remember to alert the user when one of the two
+       * matches with data stored in db
+       */
     }
 
     //salting and hashing password
@@ -63,7 +83,6 @@ export const RegisterUser = async (req, res) => {
 //login for users
 export const LoginUser = async (req, res) => {
   const { email, password } = req.body;
-
   const secret = process.env.JWT_SECRET;
 
   try {

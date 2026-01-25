@@ -1,0 +1,64 @@
+<header>
+  <app-header></app-header>
+</header>
+
+<section class="p-5 my-5">
+  <a
+    routerLink="/homepage"
+    class="cursor-pointer flex items-center hover:text-[#6d28d2] transition ease-in font-medium"
+  >
+    <span class="material-symbols-rounded"> chevron_left </span>
+    indietro
+  </a>
+  <h2 class="text-3xl font-medium text-center">Competenze che costruiscono il tuo futuro</h2>
+</section>
+
+<div class="p-6 border border-gray-200 w-[60%] my-14 mx-auto shadow-md rounded-md">
+  <div class="flex gap-10">
+    <img src="images/course-image.jpg" alt="" class="h-72 bg-center bg-cover bg-no-repeat my-14" />
+    <div class="m-3">
+      <div class="p-1">
+        <p class="bg-green-600 text-white text-xs w-20 p-1 text-center rounded-full mb-2">
+          {{ details?.status }}
+        </p>
+      </div>
+
+      <p class="text-4xl font-medium p-2">{{ details?.title }}</p>
+
+      <div class="my-4 p-3">
+        <p class="text-[#6d28d2] font-medium text-xl">Cosa imparerai</p>
+        <p class="mt-2 text-[#2e2e2e]">{{ details?.description }}</p>
+      </div>
+
+      <div class="my-4 text-[#7f7f7f] flex flex-col gap-2 p-3">
+        <p>
+          Creato da <span class="text-[#6d28d2] underline">{{ details?.instructor_name }}</span>
+        </p>
+        <p>
+          Pubblicato
+          <span class="text-[#6d28d2]">{{ details?.published | date: 'yyyy-MM-dd' }}</span>
+        </p>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-1 justify-center p-3">
+          <span class="material-symbols-rounded"> live_tv </span>
+          <p class="text-xs">{{ details?.establishedTime }} ore di video on-demand</p>
+        </div>
+
+        @if (enrolledCourseIds.has(details?.id)) {
+          <button class="bg-[#e2e2e2] p-3 rounded-md text-white w-40 cursor-not-allowed">
+            iscritto
+          </button>
+        } @else {
+          <button
+            class="bg-[#6d28d2] p-3 rounded-md text-white w-40 cursor-pointer hover:bg-[#892de1] transition ease-in"
+            (click)="enrollToCourse()"
+          >
+            iscriviti gratuitamente
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

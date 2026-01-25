@@ -1,24 +1,44 @@
-# COURSE ENROLLMENT TRACKER APPLICATION
+# **Sistema di Gestione Iscrizioni ai Corsi**
 
-**Questa applicazione è una piattaforma web per la gestione dell’iscrizione ai corsi e il monitoraggio del tempo di studio, ispirata a un sistema di apprendimento online semplificato.**
+## Descrizione
 
-**L’obiettivo del progetto è consentire agli studenti di consultare i corsi disponibili, iscriversi a uno o più corsi e registrare le ore di studio effettuate, permettendo così il tracciamento dei progressi rispetto alle ore previste per ciascun corso. I docenti, invece, possono creare e gestire i corsi definendone le informazioni principali, come titolo, descrizione, data di inizio e monte ore complessivo.**
+Il progetto consiste nello sviluppo di un sistema per la gestione delle iscrizioni ai corsi di formazione, progettato per due tipologie di utenti: studenti e istruttori.
 
-**L’applicazione è composta da un frontend sviluppato in Angular e da un backend REST sviluppato in Node.js, con persistenza dei dati tramite Sqlite. La soluzione è progettata con un’architettura semplice e focalizzata sulla chiarezza del modello dati e sulla separazione delle responsabilità tra frontend e backend.**
+Gli studenti possono visualizzare i corsi disponibili, consultare i dettagli, iscriversi e monitorare le ore di frequenza attraverso una pagina personale. Gli istruttori possono creare nuovi corsi e controllare l’elenco dei corsi da loro creati, insieme al numero di iscritti.
 
-## REQUISITI FUNZIONALI
+Il sistema è organizzato in due cartelle principali: backend e frontend, che operano in modo indipendente, garantendo una chiara separazione delle responsabilità.
 
-- _AUTENTICAZIONE_
-  - SignUp / Login
-  - Definire ruolo degli utenti : Studente o Docente
-- _STUDENTI_
-  - Visualizzare l’elenco di tutti i corsi disponibili
-  - Iscrizione ad uno o più corsi
-  - Visualizzare i corsi a cui è iscritto
-  - Accedere alla pagina personale del corso
-  - Registrazione del tempo di studio
-    - ore totali studiati
-    - progresso rispetto alle ore previste
-- _DOCENTI_
-  - Creazione di nuovi corsi
-  - Visualizzare i corsi creati
+**_Tecnologie utilizzate_**
+
+Frontend: Angular
+
+Backend: Node.js
+
+Database: SQLite
+
+Autenticazione: JWT
+
+## Configurazione .env per il backend
+
+Prima di avviare il backend, creare un file .env nella cartella backend con le seguenti variabili:
+
+`JWT_SECRET= il_tuo_token`
+`DB_PATH=database/courseDb.sqlite`
+`PORT=9393`
+
+### Avvio del Backend
+
+Posizionarsi nella cartella backend
+
+Installare le dipendenze:
+`npm install`
+
+Avviare il server:
+`npm run dev`
+
+### Avvio del Frontend
+
+Posizionarsi nella cartella frontend
+
+Avviare l’applicazione Angular:
+`ng serve --open`
