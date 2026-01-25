@@ -196,36 +196,44 @@ export const SaveStudiedHours = async (req, res) => {
         .json({ message: "studied_hours must be a positive number" });
     }
 
-    const user = await User.findOne({
-      where: { email: userLogged.email },
-    });
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    const user = await User.findOne({ where: { email: userLogged.email } });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     const courseEnrollment = await CourseEnrollment.findOne({
-      where: {
-        course_id,
-        user_id: user.id,
-      },
+      where: { course_id, user_id: user.id },
     });
-
-    if (!courseEnrollment) {
+    if (!courseEnrollment)
       return res.status(404).json({ message: "Course enrollment not found" });
+
+    const course = await Course.findOne({ where: { id: course_id } });
+    if (!course) return res.status(404).json({ message: "Course not found" });
+
+    const currentHours = courseEnrollment.studied_hours || 0;
+    const maxHours = course.establishedTime;
+
+    const hoursToAdd = Math.min(studied_hours, maxHours - currentHours);
+    if (hoursToAdd <= 0) {
+      return res
+        .status(400)
+        .json({
+          message: "You have already completed the maximum course hours.",
+        });
     }
 
     await CourseEnrollment.increment("studied_hours", {
-      by: studied_hours,
-      where: {
-        user_id: user.id,
-        course_id,
-      },
+      by: hoursToAdd,
+      where: { course_id, user_id: user.id },
+    });
+
+    const updatedEnrollment = await CourseEnrollment.findOne({
+      where: { course_id, user_id: user.id },
     });
 
     return res.status(200).json({
       message: "Studied hours updated successfully",
-      studied_hours: courseEnrollment.studied_hours + studied_hours,
+      studied_hours: updatedEnrollment.studied_hours,
+      added_hours: hoursToAdd,
+      max_hours: maxHours,
     });
   } catch (error) {
     return res.status(500).json({
