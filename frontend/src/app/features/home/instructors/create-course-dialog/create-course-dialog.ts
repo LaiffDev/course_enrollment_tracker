@@ -1,6 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserModel } from '../../../../shared/models/user-model';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {
   FormGroup,
