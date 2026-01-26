@@ -45,9 +45,7 @@ export class AddHoursDialog {
   }
 
   savePresence() {
-    const rawDate: any = this.StudentFormGroup.value.day_studied;
-
-    const studied_date = new Date(rawDate).toISOString().split('T')[0];
+    const studied_date = this.StudentFormGroup.value.day_studied;
 
     const payload = {
       studied_hours: this.StudentFormGroup.value.studied_hours,
