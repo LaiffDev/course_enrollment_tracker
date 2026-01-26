@@ -1,12 +1,13 @@
+// models/CourseStudyLog.js
 import { sequelize, DataTypes } from "../database/dbConnection.js";
 
-const CourseEnrollment = sequelize.define(
-  "CourseEnrollment",
+const CourseStudyLog = sequelize.define(
+  "CourseStudyLog",
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -16,9 +17,13 @@ const CourseEnrollment = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    enrolledAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+    studied_hours: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    studied_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
     },
   },
   {
@@ -27,4 +32,4 @@ const CourseEnrollment = sequelize.define(
   },
 );
 
-export default CourseEnrollment;
+export default CourseStudyLog;

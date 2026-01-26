@@ -7,8 +7,11 @@ import {
   GetAllCoursesForTeachers,
   GetCourseDetails,
   GetStudentsEnrolledCourses,
-  SaveStudiedHours,
 } from "../controllers/courseController.js";
+import {
+  GetStudyLogs,
+  SaveStudiedHours,
+} from "../controllers/courseLogsController.js";
 
 const courseRouter = express.Router();
 
@@ -28,5 +31,6 @@ courseRouter.get(
   GetStudentsEnrolledCourses,
 );
 courseRouter.post("/save-attendance", AuthenticateToken, SaveStudiedHours);
+courseRouter.get("/logs/:course_id", AuthenticateToken, GetStudyLogs);
 
 export default courseRouter;
