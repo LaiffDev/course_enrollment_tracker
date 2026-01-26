@@ -14,6 +14,15 @@
     </div>
 
     <div>
+      <mat-form-field class="w-full">
+        <mat-label>Data pubblicazione</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="day_studied" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div>
       <button
         class="w-full border hover:bg-[#6d28d2] hover:text-white cursor-pointer transition-all ease-in border-[#6d28d2] font-medium text-lg p-4 rounded-md text-[#6d28d2]"
       >

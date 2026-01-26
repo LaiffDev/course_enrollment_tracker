@@ -1,0 +1,13 @@
+<div class="p-3">
+  <h2 class="text-3xl px-4 font-medium">Achivio delle Frequenze</h2>
+  <div class="p-4">
+    <p class="text-xl">{{ course.title }}</p>
+    @for (log of logs; track log.id) {
+      <div class="border border-gray-200 p-3 rounded-md shadow-md my-2">
+        <p>Data di frequenza : {{ log.studied_date }}</p>
+        <p>Ore Studio : {{ log.studied_hours }}</p>
+      </div>
+    }
+    <p></p>
+  </div>
+</div>

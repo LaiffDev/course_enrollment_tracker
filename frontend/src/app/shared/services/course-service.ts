@@ -36,4 +36,8 @@ export class CourseService {
   AttendanceHours(attendanceData: any) {
     return this.http.post<any>(`${environment.apiUrl}/api/courses/save-attendance`, attendanceData);
   }
+
+  GetCourseStudyLogs(courseId: any) {
+    return this.http.get<any>(`${environment.apiUrl}/api/courses/logs/${courseId}`);
+  }
 }

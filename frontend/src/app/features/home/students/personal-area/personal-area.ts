@@ -8,9 +8,10 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
-import { FormGroup, ɵInternalFormsSharedModule } from '@angular/forms';
+import { ɵInternalFormsSharedModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AddHoursDialog } from './add-hours-dialog/add-hours-dialog';
+import { ArchiveDialog } from './archive-dialog/archive-dialog';
 
 @Component({
   selector: 'app-personal-area',
@@ -41,21 +42,21 @@ export class PersonalArea {
     'studied_hours',
     'cta',
   ];
+
   dataSource!: MatTableDataSource<CourseModel>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   courses: CourseModel[] = [];
-  enrolledCourses: CourseModel[] = [];
-  enrolled: any;
-  studiedHours: [] = [];
+  enrolledCourses: any[] = [];
+  enrolled: any[] = [];
 
   constructor() {
-    this.dataSource = new MatTableDataSource<CourseModel>(this.courses);
+    this.dataSource = new MatTableDataSource<CourseModel>([]);
   }
 
   ngOnInit() {
-    this.availableCourses();
+    this.loadAvailableCourses();
   }
 
   ngAfterViewInit() {
@@ -63,66 +64,68 @@ export class PersonalArea {
     this.dataSource.sort = this.sort;
   }
 
-  availableCourses() {
+  loadAvailableCourses() {
     this.courseService.GetAvailableCourses().subscribe({
       next: (res) => {
         this.courses = res;
-        this.studentsEnrolledCourses();
+        this.loadEnrolledCourses();
       },
-      error: (err) => {
-        console.error('Errore nel recupero dei corsi : ', err);
-      },
+      error: (err) => console.error('Error loading courses:', err),
     });
   }
 
-  studentsEnrolledCourses() {
+  loadEnrolledCourses() {
     this.courseService.StudentsEnrolledCourses().subscribe({
       next: (res) => {
-        this.enrolled = res;
+        this.enrolled = res || [];
 
-        this.enrolled.forEach((res: any) => {
-          this.courses.forEach((course) => {
-            if (course.id == res.course_id) {
-              this.enrolledCourses.push(course);
-            }
-          });
-        });
+        this.enrolledCourses = this.courses
+          .filter((course) => this.enrolled.some((e) => e.course_id === course.id))
+          .map((course) => ({ ...course, logs: [] }));
 
-        this.dataSource.data = this.enrolledCourses;
+        this.enrolledCourses.forEach((course) => this.loadCourseLogs(course));
+
+        this.dataSource.data = [...this.enrolledCourses];
       },
+      error: (err) => console.error('Error loading enrolled courses:', err),
     });
   }
 
-  addStudiedHours(row: CourseModel) {
-    const dialog = this.dialog.open(AddHoursDialog, { width: '400px', data: row });
+  loadCourseLogs(course: any) {
+    this.courseService.GetCourseStudyLogs(course.id).subscribe({
+      next: (logs) => {
+        course.logs = logs || [];
+        this.dataSource.data = [...this.enrolledCourses]; // refresh table
+      },
+      error: (err) => console.error('Error loading course logs:', err),
+    });
+  }
 
-    dialog.afterClosed().subscribe((payload) => {
+  addStudiedHours(course: any) {
+    const dialogRef = this.dialog.open(AddHoursDialog, { width: '400px', data: course });
+
+    dialogRef.afterClosed().subscribe((payload) => {
       if (!payload) return;
 
       this.courseService.AttendanceHours(payload).subscribe({
         next: (res) => {
-          const enrollment = this.enrolled.find((e: any) => e.course_id === row.id);
-          if (enrollment) {
-            enrollment.studied_hours = res.studied_hours;
-          } else {
-            this.enrolled.push({
-              course_id: row.id,
-              studied_hours: res.studied_hours,
-            });
-          }
-
-          this.dataSource.data = [...this.dataSource.data];
+          if (!course.logs) course.logs = [];
+          course.logs.push(res.log);
+          this.dataSource.data = [...this.enrolledCourses];
         },
-        error: (err) => console.error(err),
+        error: (err) => console.error('Error saving studied hours:', err),
       });
     });
   }
 
   getStudiedHours(course: any): number {
-    const enrollment = this.enrolled.find((enroll: any) => enroll.course_id === course.id);
+    if (!course.logs || course.logs.length === 0) return 0;
 
-    if (!enrollment) return 0;
+    const totalHours = course.logs.reduce((sum: number, log: any) => sum + log.studied_hours, 0);
+    return Math.min(totalHours, course.establishedTime);
+  }
 
-    return Math.min(enrollment.studied_hours, course.establishedTime);
+  showArchive(course: any) {
+    const dialogRef = this.dialog.open(ArchiveDialog, { data: { course }, width: '600px' });
   }
 }
